@@ -8,7 +8,17 @@ var entries = [
 
 /* READ all: GET entries listing. */
 router.get('/', function(req, res, next) {
-  res.render('entries/index', { title: 'Blog', entries: entries });
+  req.db.driver.execQuery(
+    "SELECT * FROM entries;",
+    function(err, data){
+      if(err){
+        console.log(err);
+      }
+
+      res.render('entries/index', { title: 'Blog', entries: data });
+    }
+  );
+
 });
 
 /* CREATE entry form: GET /entries/new */
@@ -18,8 +28,26 @@ router.get('/new', function(req, res, next) {
 
 /*CREATE entry: POST /entries/ */
 router.post('/', function(req, res, next) {
-  entries.push(req.body);
-  res.render('entries/index', { title: 'Blog', entries: entries });
+  req.db.driver.execQuery(
+    "INSERT INTO entries (slug,body) VALUES ('" + req.body.slug + "','" + req.body.body + "');",
+    function(err, data){
+      if(err)
+      {
+        console.log(err);
+      }
+    }
+  );
+
+  req.db.driver.execQuery(
+    "SELECT * FROM entries;",
+    function(err, data){
+      if(err){
+        console.log(err);
+      }
+
+      res.render('entries/index', { title: 'Blog', entries: data });
+    }
+  );
 });
 
 /* UPDATE entry form: GET /entries/1/edit */

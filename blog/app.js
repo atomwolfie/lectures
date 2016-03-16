@@ -4,7 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var orm = require('orm');
+
 
 var routes = require('./routes/index');
 var entries = require('./routes/entries');
@@ -22,6 +22,9 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+var orm = require('orm');
 
 var dbstring = "postgres://cs2610:asdfasdf@localhost/entries";
 var string = process.env.DATABASE_URL || dbstring;

@@ -1,11 +1,12 @@
+
 <% include ../head %>
 
 <ul>
 <% for(var i=0; i<entries.length; i++) { %>
  <li>
-   <a href='/entries/<%= i %>' ><%= entries[i].slug %></a>
-   <a href='/entries/<%= i %>/edit'>Edit</a>
-   <a href='/entries/<%= i %>/delete'>Delete</a>
+   <a href='/entries/<%= entries[i].id %>' ><%= entries[i].slug %></a>
+   <a href='/entries/<%= entries[i].id %>/edit'>Edit</a>
+   <a href='/entries/<%= entries[i].id %>/delete'>Delete</a>
  </li>
 <% } %>
 </ul>

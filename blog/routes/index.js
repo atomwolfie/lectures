@@ -28,7 +28,7 @@ router.post('/login', function(req, res, next) {
 
       if(hashed_input === data[0].password) //DONT Do this is other projects!!!
       {
-        res.cookie('username', data.name);
+        res.cookie('username', data[0].name);
         res.redirect('/entries/');
       }
       else

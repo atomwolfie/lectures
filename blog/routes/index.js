@@ -25,17 +25,17 @@ router.post('/login', function(req, res, next) {
 
       sha1sum.update(req.body.password);
       var hashed_input = sha1sum.digest('hex');
+      // 0-9a-f
 
-      if(hashed_input === data.password)
+      if(hashed_input === data.password) //DONT Do this is other projects!!!
       {
+        res.cookie('username', data.name);
         res.redirect('/entries/index');
       }
       else
       {
         res.redirect('/login');
       }
-
-      res.render('entries/entry', {title: "a entry", entry: data[0]});
     }
   );
 

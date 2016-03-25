@@ -25,12 +25,19 @@ router.post('/login', function(req, res, next) {
 
       sha1sum.update(req.body.password);
       var hashed_input = sha1sum.digest('hex');
-      // 0-9a-f
+      console.log("================")
+      console.log(hashed_input);
+      console.log(typeof hashed_input);
 
-      if(hashed_input === data.password) //DONT Do this is other projects!!!
+      console.log(data[0].password);
+      console.log(typeof data[0].password);
+
+      console.log(hashed_input === data[0].password);
+
+      if(hashed_input === data[0].password) //DONT Do this is other projects!!!
       {
         res.cookie('username', data.name);
-        res.redirect('/entries/index');
+        res.redirect('/entries/');
       }
       else
       {

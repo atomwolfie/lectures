@@ -8,7 +8,8 @@ router.get('/', function(req, res, next) {
   req.db.driver.execQuery(
     "SELECT * FROM entries;",
     function(err, data){
-      if(err){
+      if(err)
+      {
         console.log(err);
       }
 
@@ -33,17 +34,8 @@ router.post('/', function(req, res, next) {
       {
         console.log(err);
       }
-    }
-  );
 
-  req.db.driver.execQuery(
-    "SELECT * FROM entries;",
-    function(err, data){
-      if(err){
-        console.log(err);
-      }
-
-      res.render('entries/index', { title: 'Blog', entries: data });
+      res.redirect(303, '/entries/index');
     }
   );
 });
@@ -72,29 +64,21 @@ router.get('/:id/edit', function(req, res, next) {
 
 /* UPDATE entry: POST /entries/1 */
 router.post('/:id', function(req, res, next) {
+  var id=parseInt(req.params.id);
+
   req.db.driver.execQuery(
     "UPDATE entries SET slug=? ,body=? WHERE id=?;",
-    [req.body.slug, req.body.body, parseInt(req.params.id)]
-    function(err, data){
-      if(err)
-      {
-        console.log(err);
-      }
-    }
-  );
-
-  req.db.driver.execQuery(
-    'SELECT * FROM entries WHERE id=?;',
-    [parseInt(req.params.id)],
+    [req.body.slug, req.body.body, parseInt(req.params.id)],
     function(err, data){
       if(err)
       {
         console.log(err);
       }
 
-      res.render('entries/entry', {title: "a entry", entry: data[0]});
+      res.redirect(303, '/entries/' + id);
     }
   );
+
 });
 
 /* DELETE entry: GET /entries/1/delete  */
@@ -107,17 +91,8 @@ router.get('/:id/delete', function(req, res, next) {
       {
         console.log(err);
       }
-    }
-  );
 
-  req.db.driver.execQuery(
-    "SELECT * FROM entries;",
-    function(err, data){
-      if(err){
-        console.log(err);
-      }
-
-      res.render('entries/index', { title: 'Blog', entries: data });
+      res.redirect(303, '/entries/');
     }
   );
 });

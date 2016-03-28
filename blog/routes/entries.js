@@ -37,7 +37,7 @@ router.post('/', function(req, res, next) {
         console.log(err);
       }
 
-      res.redirect(303, '/entries/index');
+      res.redirect(303, '/entries/');
     }
   );
 });
@@ -86,7 +86,7 @@ router.post('/:id', function(req, res, next) {
 /* DELETE entry: GET /entries/1/delete  */
 router.get('/:id/delete', function(req, res, next) {
   req.db.driver.execQuery(
-    'DElETE FROM entries WHERE id=?;',
+    'DELETE FROM entries WHERE id=?;',
     [parseInt(req.params.id)],
     function(err, data){
       if(err)
@@ -102,6 +102,7 @@ router.get('/:id/delete', function(req, res, next) {
 /* THIS NEEDS TO BE LAST or /new goes here rather than where it should */
 /* READ one entry: GET /entries/0 */
 router.get('/:id', function(req, res, next) {
+  console.log("GET entry id");
   req.db.driver.execQuery(
     'SELECT * FROM entries WHERE id=?;',
     [parseInt(req.params.id)],

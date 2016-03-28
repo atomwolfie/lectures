@@ -5,6 +5,8 @@ var entries = [];
 
 /* READ all: GET entries listing. */
 router.get('/', function(req, res, next) {
+  console.log(req.cookies.username);
+  var name = req.cookies.username || 'anonymous';
   req.db.driver.execQuery(
     "SELECT * FROM entries;",
     function(err, data){
@@ -13,7 +15,7 @@ router.get('/', function(req, res, next) {
         console.log(err);
       }
 
-      res.render('entries/index', { title: 'Blog', entries: data });
+      res.render('entries/index', { title: 'Blog', entries: data, name: name });
     }
   );
 
